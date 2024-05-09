@@ -1,20 +1,15 @@
-# HW3 Part2: Error detection code implementation using shift-register (Flexible Generator implemented)
+
+# HW3 Part2: Error detection code implementation using shift-register 
+# Flexible Generator implemented
 
 def crc_shift_register(data, generator):
   
-  # Convert data string to a list of integers
-  data_bits = [int(bit) for bit in data.split()]
-  # Convert generator string to a list of integers
-  generator_bits = [int(bit) for bit in generator.split()]
+  data_bits = [int(bit) for bit in data.split()] # Convert data string to a list of integers
+  generator_bits = [int(bit) for bit in generator.split()] # Convert generator string to a list of integers
 
-  # CRC bit length calculation (generator length - 1)
-  crc_len = len(generator_bits) - 1
-
-  # CRC register initialization with zeros
-  crc_register = [0] * crc_len
-
-  # Initial codeword (data bits + CRC register)
-  initial_codeword = data_bits + crc_register
+  crc_len = len(generator_bits) - 1 # CRC bit length calculation (generator length - 1)
+  crc_register = [0] * crc_len # CRC register initialization with zeros
+  initial_codeword = data_bits + crc_register # Initial codeword (data bits + CRC register)
 
   # CRC logic implementation
   for bit_index in range(len(initial_codeword)):
@@ -26,38 +21,26 @@ def crc_shift_register(data, generator):
     if crc_register[0]:
       # XOR with the generator polynomial (excluding the top bit) if MSB is 1
       next_crc_register = list_xor(next_crc_register, generator_bits[1:])
-
       # Update the CRC register with the XOR result
       crc_register = next_crc_register
 
-  # Final CRC value calculation (the CRC is now in the register)
-  crc = crc_register
-
-  # Codeword generation (data + CRC)
-  codeword = data_bits + crc
+  crc = crc_register # Final CRC value calculation (the CRC is now in the register)
+  codeword = data_bits + crc # Codeword generation (data + CRC)
 
   # Convert lists to strings of 0s and 1s with spaces
   crc_string = " ".join(map(str, crc))
   codeword_string = " ".join(map(str, codeword))
 
-  # Return result as a tuple
-  return crc_string, codeword_string
+  return crc_string, codeword_string # Return result as a tuple
 
 def crc_shift_register2(codeword, generator):
   
-  # Convert codeword string to a list of integers
-  codeword_bits = [int(bit) for bit in codeword.split()]  
-  # Convert generator string to a list of integers
-  generator_bits = [int(bit) for bit in generator.split()]
+  codeword_bits = [int(bit) for bit in codeword.split()] # Convert codeword string to a list of integers
+  generator_bits = [int(bit) for bit in generator.split()] # Convert generator string to a list of integers
 
-  # CRC bit length calculation (generator length - 1)
-  crc_len = len(generator_bits) - 1
-
-  # CRC register initialization with zeros
-  crc_register = [0] * crc_len
-
-  # Append CRC register to codeword for processing
-  initial_codeword = codeword_bits + crc_register
+  crc_len = len(generator_bits) - 1 # CRC bit length calculation (generator length - 1)
+  crc_register = [0] * crc_len # CRC register initialization with zeros
+  initial_codeword = codeword_bits + crc_register # Append CRC register to codeword for processing
 
   # Perform CRC calculation using the same logic as crc_shift_register
   for bit_index in range(len(initial_codeword)):
@@ -66,11 +49,9 @@ def crc_shift_register2(codeword, generator):
           next_crc_register = list_xor(next_crc_register, generator_bits[1:])
       crc_register = next_crc_register
 
-  # Final CRC value is in the CRC register
-  crc = crc_register
+  crc = crc_register # Final CRC value is in the CRC register
   
-  # return result
-  return crc
+  return crc # return result
 
 # This function performs an element-wise XOR operation on two lists.
 def list_xor(list1, list2): 
