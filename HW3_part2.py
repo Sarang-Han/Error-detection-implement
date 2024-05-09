@@ -1,5 +1,4 @@
-# HW3 Part2: Error detection code implementation using shift-register
-# Flexible Generator implemented
+# HW3 Part2: Error detection code implementation using shift-register (Flexible Generator implemented)
 
 def crc_shift_register(data, generator):
   
